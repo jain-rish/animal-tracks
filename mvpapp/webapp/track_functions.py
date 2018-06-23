@@ -97,7 +97,7 @@ def full_pipeline(img):
   test_data = image_feature_extraction(cropped_img)
   predicted_class = image_classification(test_data)
   print(predicted_class)
-   file_directory = './webapp/static/images'  
+  file_directory = './webapp/static/images'  
   if predicted_class=='a bear':
     files1 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('blackbear' in f))]
     files2 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('grizzly' in f))]
