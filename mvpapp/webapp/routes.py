@@ -50,7 +50,7 @@ def index():
             # Write image to static directory and do the hot dog check
             imgurl=os.path.join(app.config['UPLOAD_FOLDER'], img_name)
             print(imgurl)
-#            img_file.save(imgurl)
+            img_file.save(imgurl)
 #            img = kimage.load_img(imgurl, target_size=(224, 224))
             img = cv2.imread(imgurl)
             print(img)
