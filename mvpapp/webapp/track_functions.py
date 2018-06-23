@@ -70,7 +70,7 @@ def image_classification(test_data):
   import os
   
 ##  train_data = np.squeeze(np.load('/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/data/gray_filt_multi_bottleneck_features_train.npy'))
-  train_data = np.load('/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/data/gray_filt_multi_bottleneck_features_train.npy')
+  train_data = np.load('./webapp/static/data/gray_filt_multi_bottleneck_features_train.npy')
   train_data = np.reshape(train_data, (train_data.shape[0], np.prod(train_data.shape[1:])))
   n_total = train_data.shape[0]
   n_classes = 4
@@ -97,8 +97,7 @@ def full_pipeline(img):
   test_data = image_feature_extraction(cropped_img)
   predicted_class = image_classification(test_data)
   print(predicted_class)
-  #### WILL HAVE TO FIGURE OUT HOW TO REWRITE THIS WHEN ON AWS #####
-  file_directory = './webapp/static/images'  
+   file_directory = './webapp/static/images'  
   if predicted_class=='a bear':
     files1 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('blackbear' in f))]
     files2 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('grizzly' in f))]

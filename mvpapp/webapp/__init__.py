@@ -14,7 +14,7 @@ from flask import Flask
 app = Flask(__name__)
 app.config.from_object(__name__) 
 app.config.update(dict(
-UPLOAD_FOLDER = "//Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/images/demo",
+UPLOAD_FOLDER = "~/animal-tracks/mvpapp/webapp/uploads",
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 ))
 
