@@ -43,7 +43,6 @@ def index():
         if file and allowed_file(file.filename):
             print('SUCCESS')
 
-            ########## TEMPORARY FOR TESTING ###########
                     # Image info
             img_file = flask.request.files.get('file')
 #            img_name = img_file.filename
