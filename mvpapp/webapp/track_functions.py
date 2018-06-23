@@ -30,7 +30,6 @@ def image_preprocessing(img):
 
 def image_feature_extraction(cropped_img):
   import time
-  import matplotlib.pyplot as plt
   import numpy as np
   from keras.applications.vgg19 import VGG19
   from keras.applications.inception_v3 import InceptionV3
