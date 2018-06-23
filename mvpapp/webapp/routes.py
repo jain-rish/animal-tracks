@@ -52,21 +52,21 @@ def index():
             imgurl=os.path.join(app.config['UPLOAD_FOLDER'], img_name)
             print(imgurl)
 #            img_file.save(imgurl)
-###            img = kimage.load_img(imgurl, target_size=(224, 224))
-##            img = cv2.imread(imgurl)
-##            print(img)
-###            req = urllib.request.urlopen(imgurl)
-###            arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-###            img = cv2.imdecode(arr, -1) # 'Load it as it is'           print(type(img))
-###            cropped_img = tf.image_preprocessing(img)
-###            test_data = tf.image_feature_extraction(cropped_img)
-###            predicted_class = tf.image_classification(test_data)
-###            the_result = tf.full_pipeline(img)
-##            predicted_class = tf.full_pipeline(img)
+#            img = kimage.load_img(imgurl, target_size=(224, 224))
+            img = cv2.imread(imgurl)
+            print(img)
+#            req = urllib.request.urlopen(imgurl)
+#            arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+#            img = cv2.imdecode(arr, -1) # 'Load it as it is'           print(type(img))
+#            cropped_img = tf.image_preprocessing(img)
+#            test_data = tf.image_feature_extraction(cropped_img)
+#            predicted_class = tf.image_classification(test_data)
+#            the_result = tf.full_pipeline(img)
+            predicted_class, image_files, creature_names, track_paths = tf.full_pipeline(img)
 ##
-            predicted_class = 'bullshit!'
+##            predicted_class = 'bullshit!'
             
-            return flask.render_template('output.html', the_result = predicted_class, input_photo = imgurl)
+            return flask.render_template('output.html', the_result = predicted_class, image_files = image_files, creature_names = creature_names, track_paths = track_paths, input_photo = imgurl)
         flask.flash('Upload only image files')
 
         
