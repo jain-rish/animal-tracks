@@ -28,7 +28,7 @@ def index():
 
 
     if method == 'GET':
-        return flask.render_template('input.html')
+        return flask.render_template('index.html')
     
     if method == 'POST':
         # No file found in the POST submission
