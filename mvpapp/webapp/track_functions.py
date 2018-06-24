@@ -57,6 +57,7 @@ def image_feature_extraction(cropped_img):
 
 #  test_data = vgg_conv.predict(test_generator)
   test_data = vgg_conv.predict(cropped_img)
+  del vgg_conv
   test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
   print('generated features')
   return test_data
@@ -81,6 +82,7 @@ def image_classification(test_data):
   clf = LogisticRegression(penalty='l1').fit(train_data, train_labels)
   pred = clf.predict(test_data)
   print('classification complete')
+  del train_data, test_data
   return class_labels[int(np.round(pred))]
 
 
