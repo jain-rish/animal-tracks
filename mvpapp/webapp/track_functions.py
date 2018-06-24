@@ -36,6 +36,7 @@ def image_feature_extraction(cropped_img):
   from keras.applications.vgg16 import preprocess_input, decode_predictions
   from keras.preprocessing import image
   from keras.models import Model
+  from keras.backend import clear_session
   import cv2
   # do feature generation
   cropped_img = np.repeat(np.reshape(cropped_img, (1, cropped_img.shape[0], cropped_img.shape[1], 1)),3,3)
@@ -57,9 +58,9 @@ def image_feature_extraction(cropped_img):
 
 #  test_data = vgg_conv.predict(test_generator)
   test_data = vgg_conv.predict(cropped_img)
-  del vgg_conv
   test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
   print('generated features')
+  clear_session()
   return test_data
 
 def image_classification(test_data):
@@ -82,7 +83,6 @@ def image_classification(test_data):
   clf = LogisticRegression(penalty='l1').fit(train_data, train_labels)
   pred = clf.predict(test_data)
   print('classification complete')
-  del train_data, test_data
   return class_labels[int(np.round(pred))]
 
 
