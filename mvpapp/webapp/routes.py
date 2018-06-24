@@ -11,6 +11,8 @@ import urllib
 import tensorflow
 import numpy as np
 from werkzeug.utils import secure_filename
+from keras.preprocessing import image
+from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
 from webapp import app
 from webapp import track_functions as tf
 

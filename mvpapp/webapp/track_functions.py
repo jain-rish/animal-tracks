@@ -31,9 +31,8 @@ def image_preprocessing(img):
 def image_feature_extraction(cropped_img):
   import time
   import numpy as np
-  from keras.applications.vgg16 import VGG16
+  from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
 #  from keras.applications.inception_v3 import InceptionV3
-  from keras.applications.vgg16 import preprocess_input, decode_predictions
   from keras.preprocessing import image
   from keras.models import Model
   from keras.backend import clear_session
