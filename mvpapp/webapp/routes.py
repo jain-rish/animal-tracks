@@ -15,8 +15,6 @@ from webapp import track_functions as tf
 
 app.secret_key = 'rachel'
 
-uploadpath= "/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/images/demo"
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
