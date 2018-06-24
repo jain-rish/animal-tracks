@@ -8,13 +8,14 @@ Created on Wed Jun 13 09:56:53 2018
 import glob, os, io, flask
 import cv2
 import urllib
+import tensorflow
 import numpy as np
 from werkzeug.utils import secure_filename
 from webapp import app
 from webapp import track_functions as tf
 
 app.secret_key = 'rachel'
-graph = tf.get_default_graph()
+graph = tensorflow.get_default_graph()
 cnn = VGG16(weights='imagenet',
                   include_top=False)
 
