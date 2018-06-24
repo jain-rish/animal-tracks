@@ -14,6 +14,10 @@ from webapp import app
 from webapp import track_functions as tf
 
 app.secret_key = 'rachel'
+graph = tf.get_default_graph()
+cnn = VGG16(weights='imagenet',
+                  include_top=False)
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -41,7 +45,7 @@ def index():
         if file and allowed_file(file.filename):
             print('SUCCESS')
 
-                    # Image info
+            # Image info
             img_file = flask.request.files.get('file')
 #            img_name = img_file.filename
             img_name = secure_filename(img_file.filename)
@@ -53,13 +57,31 @@ def index():
             img = cv2.imread(imgurl)
             print(img)
 #            req = urllib.request.urlopen(imgurl)
-#            arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
-#            img = cv2.imdecode(arr, -1) # 'Load it as it is'           print(type(img))
-#            cropped_img = tf.image_preprocessing(img)
-#            test_data = tf.image_feature_extraction(cropped_img)
-#            predicted_class = tf.image_classification(test_data)
+            # preprocess
+            preproc_img = tf.image_preprocessing(img)
+            # get cnn features
+            preproc_img = np.repeat(np.reshape(preproc_img, (1, preproc_img.shape[0], preproc_img.shape[1], 1)),3,3)
+            test_datagen = image.ImageDataGenerator(
+                rotation_range=0,
+                shear_range=0,
+                zoom_range=0,
+                vertical_flip=True,
+                horizontal_flip=False
+            )
+            batch_size = 1
+            test_generator = test_datagen.flow(
+                preproc_img,
+                batch_size=batch_size
+            )
+            global graph
+            with graph.as_default():
+                test_data = cnn.predict(preproc_img)
+            test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
+            # identify
+            predicted_class = tf.image_classification(test_data)
 #            the_result = tf.full_pipeline(img)
-            predicted_class, image_files, creature_names, track_paths = tf.full_pipeline(img)
+            image_files, creature_names, track_paths = tf.get_outputs(predicted_class)
+#            predicted_class, image_files, creature_names, track_paths = tf.full_pipeline(img)
 ##
 ##            predicted_class = 'bullshit!'
             

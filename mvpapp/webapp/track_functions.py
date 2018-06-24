@@ -53,13 +53,9 @@ def image_feature_extraction(cropped_img):
   batch_size=batch_size)
   # load the model
 
-  vgg_conv = VGG16(weights='imagenet',
-                  include_top=False)
-
 #  test_data = vgg_conv.predict(test_generator)
   test_data = vgg_conv.predict(cropped_img)
   test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
-  clear_session()
   return test_data
 
 def image_classification(test_data):
@@ -84,20 +80,9 @@ def image_classification(test_data):
   return class_labels[int(np.round(pred))]
 
 
-def full_pipeline(img):
-  '''
-  Given a path to an img (img_path), performs the full processing pipeline
-  '''
-  from os import listdir
-  from os.path import isfile, join
-  import random
 
-  cropped_img = image_preprocessing(img)
-  print('completed preprocessing')
-  test_data = image_feature_extraction(cropped_img)
-  print('generated features')
-  predicted_class = image_classification(test_data)
-  print('classification complete')
+def get_outputs(predicted_class):
+  # based on prediction, figure out which images to display
   print(predicted_class)
   file_directory = './webapp/static/images'  
   if predicted_class=='a bear':
@@ -156,5 +141,27 @@ def full_pipeline(img):
   print(image_paths)
   print(random.choice(files1))
   print(track_paths)
-    
+
+  return image_paths, creature_names, track_paths #, track_file
+
+  
+
+def full_pipeline(img):
+  '''
+  Given a path to an img (img_path), performs the full processing pipeline
+  '''
+  from os import listdir
+  from os.path import isfile, join
+  import random
+
+  cropped_img = image_preprocessing(img)
+  print('completed preprocessing')
+  print(cropped_img.shape)
+  test_data = image_feature_extraction(cropped_img)
+  print('generated features')
+  predicted_class = image_classification(test_data)
+  print('classification complete')
+  image_paths, creature_names, track_paths = get_outputs(predicted_class)
+  print('determined outputs')
+  
   return predicted_class, image_paths, creature_names, track_paths #, track_file
