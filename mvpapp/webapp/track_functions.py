@@ -78,7 +78,7 @@ def image_classification(test_data):
   train_labels = np.array([0] * n_per_class + [1] * n_per_class + [2] * n_per_class + [3] * n_per_class)
   class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'a small animal']
 
-  clf = LogisticRegression(penalty='l1',C=0.01).fit(train_data, train_labels)
+  clf = LogisticRegression(penalty='l1').fit(train_data, train_labels)
   pred = clf.predict(test_data)
   print('classification complete')
   return class_labels[int(np.round(pred))]
