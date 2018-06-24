@@ -104,8 +104,10 @@ def full_pipeline(img):
     files2 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('grizzly' in f))]
     image_files = [random.choice(files1), random.choice(files2)]
     creature_names = ['black bear','grizzly bear']
-#    track_file1 = [f for f in listdir(join(file_directory ,tracks) if (isfile(join(file_directory, tracks, f)) and ('blackbear' in f))]
-#    track_file1 = [f for f in listdir(join(file_directory ,tracks) if (isfile(join(file_directory, tracks, f)) and ('blackbear' in f))]
+    files1 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('blackbear' in f))]
+    files2 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('grizzly' in f))]
+#    files3 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('fox' in f))]
+    creature_tracks = [files1[0], files2[0]]
   elif predicted_class=='a canine':
     files1 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('dog' in f))]
     files2 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('wolf' in f))]
@@ -114,8 +116,8 @@ def full_pipeline(img):
     creature_names = ['dog','wolf','fox']
     files1 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('dog' in f))]
     files2 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('wolf' in f))]
-    files3 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('fox' in f))]
-    creature_tracks = [files1[0], files2[0], files3[0]]
+#    files3 = [f for f in listdir(join(file_directory, 'tracks')) if (isfile(join(file_directory, 'tracks', f)) and ('fox' in f))]
+    creature_tracks = [files1[0], files2[0]]
   elif predicted_class=='a feline':
     files1 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('cougar' in f))]
     files2 = [f for f in listdir(file_directory) if (isfile(join(file_directory, f)) and ('bobcat' in f))]
