@@ -24,8 +24,8 @@ def image_preprocessing(img):
   gray_img = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2GRAY)
   # median filter
   blur_img = cv2.medianBlur(gray_img, 13);
+  print(blur_img.shape)
   
-  print('completed preprocessing')
   return blur_img
 
 def image_feature_extraction(cropped_img):
@@ -59,7 +59,6 @@ def image_feature_extraction(cropped_img):
 #  test_data = vgg_conv.predict(test_generator)
   test_data = vgg_conv.predict(cropped_img)
   test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
-  print('generated features')
   clear_session()
   return test_data
 
@@ -82,7 +81,6 @@ def image_classification(test_data):
 
   clf = LogisticRegression(penalty='l1').fit(train_data, train_labels)
   pred = clf.predict(test_data)
-  print('classification complete')
   return class_labels[int(np.round(pred))]
 
 
@@ -95,8 +93,11 @@ def full_pipeline(img):
   import random
 
   cropped_img = image_preprocessing(img)
+  print('completed preprocessing')
   test_data = image_feature_extraction(cropped_img)
+  print('generated features')
   predicted_class = image_classification(test_data)
+  print('classification complete')
   print(predicted_class)
   file_directory = './webapp/static/images'  
   if predicted_class=='a bear':
