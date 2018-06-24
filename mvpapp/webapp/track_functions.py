@@ -31,9 +31,9 @@ def image_preprocessing(img):
 def image_feature_extraction(cropped_img):
   import time
   import numpy as np
-  from keras.applications.vgg19 import VGG19
-  from keras.applications.inception_v3 import InceptionV3
-  from keras.applications.vgg19 import preprocess_input, decode_predictions
+  from keras.applications.vgg16 import VGG16
+#  from keras.applications.inception_v3 import InceptionV3
+  from keras.applications.vgg16 import preprocess_input, decode_predictions
   from keras.preprocessing import image
   from keras.models import Model
   import cv2
@@ -52,7 +52,7 @@ def image_feature_extraction(cropped_img):
   batch_size=batch_size)
   # load the model
 
-  vgg_conv = VGG19(weights='imagenet',
+  vgg_conv = VGG16(weights='imagenet',
                   include_top=False)
 
 #  test_data = vgg_conv.predict(test_generator)
