@@ -82,6 +82,9 @@ def image_classification(test_data):
 
 def get_outputs(predicted_class):
   # based on prediction, figure out which images to display
+  import random
+  from os import listdir
+  from os.path import isfile, join
   print(predicted_class)
   file_directory = './webapp/static/images'  
   if predicted_class=='a bear':
