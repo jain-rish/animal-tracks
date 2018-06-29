@@ -68,10 +68,10 @@ def image_classification(test_data):
   train_data = np.load('./webapp/static/data/gray_filt_multi_bottleneck_features_train.npy')
   train_data = np.reshape(train_data, (train_data.shape[0], np.prod(train_data.shape[1:])))
   n_total = train_data.shape[0]
-  n_classes = 4
+  n_classes = 5
   n_per_class = int(n_total/n_classes)
   # labels
-  train_labels = np.array([0] * n_per_class + [1] * n_per_class + [2] * n_per_class + [3] * n_per_class)
+  train_labels = np.array([0] * n_per_class + [1] * n_per_class + [2] * n_per_class + [3] * n_per_class + [4] * n_per_class)
   class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'a small animal']
 
   clf = LogisticRegression(penalty='l1').fit(train_data, train_labels)
