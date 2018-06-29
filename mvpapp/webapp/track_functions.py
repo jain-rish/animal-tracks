@@ -80,9 +80,11 @@ def image_classification(test_data):
 ##  train_labels = np.array(train_labels)
   class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'an unknown animal']
   filename = './webapp/static/data/finalized_model.sav'
-  clf = pickle.load(open(filename, 'rb'))
+  with open(filename, 'rb') as pickle_file:
+    clf = pickle.load(pickle_file)
   filename = './webapp/static/data/scaler.sav'
-  scaler = pickle.load(filename)
+  with open(filename, 'rb') as pickle_file:
+    scaler = pickle.load(pickle_file)
   test_data = scaler.transform(test_data)
 ##  clf = LogisticRegression(penalty='l1', C=1, multi_class='multinomial', solver='saga').fit(train_data, train_labels)
   pred = clf.predict(test_data)
