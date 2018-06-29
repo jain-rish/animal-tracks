@@ -28,7 +28,6 @@ def allowed_file(filename):
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-@app.route('/cougar_example', methods=['GET', 'POST'])
 def index():
         # Get method type
     method = flask.request.method
