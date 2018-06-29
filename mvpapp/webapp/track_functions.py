@@ -61,25 +61,32 @@ def image_classification(test_data):
   ##### NEED TO CHANGE TO LOAD MODEL INSTEAD WHEN MORE TIME ####
   from sklearn.linear_model import LogisticRegression
   from sklearn.svm import SVC
+  from sklearn.preprocessing import StandardScaler
   import numpy as np
   import os
+  import pickle
   
 ##  train_data = np.squeeze(np.load('/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/data/gray_filt_multi_bottleneck_features_train.npy'))
-  train_data = np.load('./webapp/static/data/gray_filt_multi_bottleneck_features_train.npy')
-  print(train_data.shape)
-  train_data = np.reshape(train_data, (train_data.shape[0], np.prod(train_data.shape[1:])))
-  n_total = train_data.shape[0]
-  n_classes = 5
-  n_per_class = int(n_total/n_classes)
-  train_labels = []
-  for this_class in range(n_classes):
-    train_labels = train_labels + [this_class] * n_per_class
-  # labels
-  train_labels = np.array(train_labels)
+##  train_data = np.load('./webapp/static/data/gray_filt_multi_bottleneck_features_train.npy')
+##  print(train_data.shape)
+##  train_data = np.reshape(train_data, (train_data.shape[0], np.prod(train_data.shape[1:])))
+##  n_total = train_data.shape[0]
+##  n_classes = 5
+##  n_per_class = int(n_total/n_classes)
+##  train_labels = []
+##  for this_class in range(n_classes):
+##    train_labels = train_labels + [this_class] * n_per_class
+##  # labels
+##  train_labels = np.array(train_labels)
   class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'an unknown animal']
-
-  clf = LogisticRegression(penalty='l1', C=1, multi_class='multinomial', solver='saga').fit(train_data, train_labels)
+  filename = '/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/data/finalized_model.sav'
+  clf = pickle.load(open(filename, 'rb'))
+  filename = '/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/data/scaler.sav'
+  scaler = pickle.load(filename)
+  test_data = scaler.transform(test_data)
+##  clf = LogisticRegression(penalty='l1', C=1, multi_class='multinomial', solver='saga').fit(train_data, train_labels)
   pred = clf.predict(test_data)
+  print(pred)
   return class_labels[int(np.round(pred))]
 
 
