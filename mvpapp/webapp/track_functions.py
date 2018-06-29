@@ -76,9 +76,9 @@ def image_classification(test_data):
     train_labels = train_labels + [this_class] * n_per_class
   # labels
   train_labels = np.array(train_labels)
-  class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'a small animal']
+  class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'an unknown animal']
 
-  clf = LogisticRegression(penalty='l2', C=1, multi_class='multinomial', solver='saga').fit(train_data, train_labels)
+  clf = LogisticRegression(penalty='l1', C=1, multi_class='multinomial', solver='saga').fit(train_data, train_labels)
   pred = clf.predict(test_data)
   return class_labels[int(np.round(pred))]
 
