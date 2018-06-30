@@ -62,7 +62,7 @@ def image_feature_extraction(blur_img_dir):
   batch_size=batch_size)
   # load the model
 
-  test_data = vgg_conv.predict(test_generator)
+  test_data = vgg_conv.predict_generator(test_generator)
 #  test_data = vgg_conv.predict(cropped_img)
   test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
   return test_data
