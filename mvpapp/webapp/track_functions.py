@@ -4,10 +4,15 @@
 def image_preprocessing(img):
   import cv2
   import numpy as np
+  from os.path import join
+
+  img_size = [224, 224]
+  filt_size = 13
+  orig_imsize = list(img.shape)
+  file_directory = './webapp/uploads'  
+  blur_img_fname = join(file_directory, 'blurred.jpg')
 
   # take a center crop of the image
-  img_size = [224, 224]
-  orig_imsize = list(img.shape)
   if orig_imsize[0]>orig_imsize[1]:
       sfactor=img_size[1]/orig_imsize[1]
   else:
@@ -19,25 +24,30 @@ def image_preprocessing(img):
   # get the crop        
   margin = np.array([new_img.shape[0]-img_size[0], new_img.shape[1]-img_size[1]])/2
   cropped_img = new_img[int(round(margin[0])):int(round(margin[0]))+img_size[0],int(round(margin[1])):int(round(margin[1]))+img_size[1],:]
-
+                     
   # make the image grayscale
   gray_img = cv2.cvtColor(cropped_img, cv2.COLOR_BGR2GRAY)
-  # median filter
-  blur_img = cv2.medianBlur(gray_img, 13);
-  print(blur_img.shape)
-  
-  return blur_img
 
-def image_feature_extraction(cropped_img):
+  # median filter
+  blur_img = cv2.medianBlur(gray_img, filt_size);
+  print(blur_img.shape)
+  # save the blurred grayscale image
+  cv2.imwrite(blur_img_fname, blur_img)
+ 
+  return blur_img_fname
+
+def image_feature_extraction(blur_img_fname):
+  
   import time
   import numpy as np
   from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
-#  from keras.applications.inception_v3 import InceptionV3
   from keras.preprocessing import image
   from keras.models import Model
   from keras.backend import clear_session
   import cv2
+  
   # do feature generation
+  # make grayscale image 3 channels
   cropped_img = np.repeat(np.reshape(cropped_img, (1, cropped_img.shape[0], cropped_img.shape[1], 1)),3,3)
   test_datagen = image.ImageDataGenerator(
     rotation_range=0,
@@ -47,57 +57,48 @@ def image_feature_extraction(cropped_img):
     horizontal_flip=False
   )
   batch_size = 1
-  test_generator = test_datagen.flow(
+  test_generator = test_datagen.flow_from_directory(
   cropped_img,
   batch_size=batch_size)
   # load the model
 
-#  test_data = vgg_conv.predict(test_generator)
-  test_data = vgg_conv.predict(cropped_img)
+  test_data = vgg_conv.predict(test_generator)
+#  test_data = vgg_conv.predict(cropped_img)
   test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
   return test_data
 
 def image_classification(test_data):
-  ##### NEED TO CHANGE TO LOAD MODEL INSTEAD WHEN MORE TIME ####
+  
   from sklearn.linear_model import LogisticRegression
-  from sklearn.svm import SVC
   from sklearn.preprocessing import StandardScaler
   import numpy as np
   import os
   import pickle
   
-##  train_data = np.squeeze(np.load('/Users/rmillin/Documents/Insight/animal-tracks/mvpapp/webapp/static/data/gray_filt_multi_bottleneck_features_train.npy'))
-##  train_data = np.load('./webapp/static/data/gray_filt_multi_bottleneck_features_train.npy')
-##  print(train_data.shape)
-##  train_data = np.reshape(train_data, (train_data.shape[0], np.prod(train_data.shape[1:])))
-##  n_total = train_data.shape[0]
-##  n_classes = 5
-##  n_per_class = int(n_total/n_classes)
-##  train_labels = []
-##  for this_class in range(n_classes):
-##    train_labels = train_labels + [this_class] * n_per_class
-##  # labels
-##  train_labels = np.array(train_labels)
-  class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'an unknown animal']
+  class_labels = ['a bear', 'a canine', 'a feline', 'an animal with hooves', 'unknown - sorry!']
+  # load the trained logistic regression classifier
   filename = './webapp/static/data/finalized_model.sav'
   with open(filename, 'rb') as pickle_file:
     clf = pickle.load(pickle_file)
+  # load the trained scaling function
   filename = './webapp/static/data/scaler.sav'
   with open(filename, 'rb') as pickle_file:
     scaler = pickle.load(pickle_file)
+  # scale the features for the input image
   test_data = scaler.transform(test_data)
-##  clf = LogisticRegression(penalty='l1', C=1, multi_class='multinomial', solver='saga').fit(train_data, train_labels)
+  # predict the class
   pred = clf.predict(test_data)
   print(pred)
   return class_labels[int(np.round(pred))]
 
 
-
 def get_outputs(predicted_class):
   # based on prediction, figure out which images to display
+  
   import random
   from os import listdir
   from os.path import isfile, join
+  
   print(predicted_class)
   file_directory = './webapp/static/images'  
   if predicted_class=='a bear':
@@ -153,30 +154,5 @@ def get_outputs(predicted_class):
   image_paths = [join(file_directory, image_file).replace('./webapp','..') for image_file in image_files]
   track_paths = [join(file_directory, 'tracks', creature_track).replace('./webapp','..') for creature_track in creature_tracks]
  
-  print(image_paths)
-  print(random.choice(files1))
-  print(track_paths)
+  return image_paths, creature_names, track_paths
 
-  return image_paths, creature_names, track_paths #, track_file
-
-  
-
-def full_pipeline(img):
-  '''
-  Given a path to an img (img_path), performs the full processing pipeline
-  '''
-  from os import listdir
-  from os.path import isfile, join
-  import random
-
-  cropped_img = image_preprocessing(img)
-  print('completed preprocessing')
-  print(cropped_img.shape)
-  test_data = image_feature_extraction(cropped_img)
-  print('generated features')
-  predicted_class = image_classification(test_data)
-  print('classification complete')
-  image_paths, creature_names, track_paths = get_outputs(predicted_class)
-  print('determined outputs')
-  
-  return predicted_class, image_paths, creature_names, track_paths #, track_file
