@@ -63,7 +63,7 @@ def index():
             print(img)
             
             # preprocess
-            preproc_img_fname = tf.image_preprocessing(img)
+            preproc_img_dir = tf.image_preprocessing(img)
             
             # get cnn features
             test_datagen = image.ImageDataGenerator(
@@ -75,7 +75,7 @@ def index():
             )
             batch_size = 1
             test_generator = test_datagen.flow_from_directory(
-                preproc_img_fname,
+                preproc_img_dir,
                 batch_size=batch_size
             )
             global graph

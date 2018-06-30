@@ -34,9 +34,9 @@ def image_preprocessing(img):
   # save the blurred grayscale image
   cv2.imwrite(blur_img_fname, blur_img)
  
-  return blur_img_fname
+  return file_directory
 
-def image_feature_extraction(blur_img_fname):
+def image_feature_extraction(blur_img_dir):
   
   import time
   import numpy as np
