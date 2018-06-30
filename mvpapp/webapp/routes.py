@@ -74,13 +74,19 @@ def index():
                 horizontal_flip=False
             )
             batch_size = 1
-            test_generator = test_datagen.flow_from_directory(
+
+            test_generator = datagen.flow_from_directory(
                 preproc_img_dir,
-                batch_size=batch_size
+                target_size = image_shape,
+            batch_size = batch_size,
+            class_mode = None,
+            shuffle = False
             )
+
             global graph
             with graph.as_default():
                 test_data = cnn.predict_generator(test_generator)
+            print(test_data)
             test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
             
             # identify
