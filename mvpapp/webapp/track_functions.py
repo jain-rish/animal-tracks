@@ -34,7 +34,7 @@ def image_preprocessing(img):
   # save the blurred grayscale image
   cv2.imwrite(blur_img_fname, blur_img)
  
-  return file_directory
+  return str.replace(file_directory,'preprocessed','')
 
 def image_feature_extraction(blur_img_dir):
   
