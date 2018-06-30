@@ -9,7 +9,7 @@ def image_preprocessing(img):
   img_size = [224, 224]
   filt_size = 13
   orig_imsize = list(img.shape)
-  file_directory = '/home/ubuntu/animal-tracks/mvpapp/webapp/uploads/preprocecessed'  
+  file_directory = '/home/ubuntu/animal-tracks/mvpapp/webapp/uploads/preprocessed'  
   blur_img_fname = join(file_directory, 'blurred.jpg')
 
   # take a center crop of the image
