@@ -78,7 +78,7 @@ def index():
             batch_size = 1
             test_generator = test_datagen.flow_from_directory(
                 preproc_img_dir,
-                target_size = image_shape,
+                target_size = img_shape,
             batch_size = batch_size,
             class_mode = None,
             shuffle = False
