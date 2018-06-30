@@ -65,6 +65,8 @@ def index():
             
             # preprocess
             preproc_img_dir = tf.image_preprocessing(img)
+            print(preproc_img_dir)
+            print(os.listdir(preproc_img_dir))
             
             # get cnn features
             test_datagen = image.ImageDataGenerator(
