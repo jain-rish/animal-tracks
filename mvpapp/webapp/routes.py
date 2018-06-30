@@ -52,6 +52,7 @@ def index():
             print('SUCCESS')
 
             # Image info
+            img_shape = [224, 224]
             img_file = flask.request.files.get('file')
             img_name = secure_filename(img_file.filename)
             
@@ -73,9 +74,9 @@ def index():
                 vertical_flip=False,
                 horizontal_flip=False
             )
-            batch_size = 1
 
-            test_generator = datagen.flow_from_directory(
+            batch_size = 1
+            test_generator = test_datagen.flow_from_directory(
                 preproc_img_dir,
                 target_size = image_shape,
             batch_size = batch_size,
