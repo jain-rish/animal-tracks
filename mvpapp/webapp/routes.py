@@ -52,7 +52,7 @@ def index():
             print('SUCCESS')
 
             # Image info
-            img_shape = [224, 224]
+            img_shape = (224, 224)
             img_file = flask.request.files.get('file')
             img_name = secure_filename(img_file.filename)
             
@@ -67,33 +67,31 @@ def index():
             preproc_img_dir = tf.image_preprocessing(img)
             print(preproc_img_dir)
             print(os.listdir(preproc_img_dir))
-            preproc_img = cv2.imread(os.path.join(preproc_img_dir,'blurred.jpg'))
-            print(preproc_img.shape)
-            preproc_img = np.repeat(np.reshape(preproc_img[:,:,0], (1, preproc_img.shape[0], preproc_img.shape[1], 1)),3,3)
-            print(preproc_img.shape)
+            
             # get cnn features
-##            test_datagen = image.ImageDataGenerator(
-##                rotation_range=0,
-##                shear_range=0,
-##                zoom_range=0,
-##                vertical_flip=False,
-##                horizontal_flip=False
-##            )
-##
-##            batch_size = 1
-##            test_generator = test_datagen.flow_from_directory(
-##                preproc_img_dir,
-##                target_size = img_shape,
-##            batch_size = batch_size,
-##            class_mode = None,
-##            shuffle = False
-##            )
+            test_datagen = image.ImageDataGenerator(
+                rescale=1./255,
+                rotation_range=0,
+                width_shift_range = 0,
+                height_shift_range = 0,
+                shear_range=0,
+                zoom_range=0,
+                fill_mode = 'nearest'
+            )
+
+            batch_size = 50
+            test_generator = test_datagen.flow_from_directory(
+                preproc_img_dir,
+                target_size = img_shape,
+                batch_size = batch_size,
+                class_mode = None,
+                shuffle = False
+            )
 
             global graph
             with graph.as_default():
-##                test_data = cnn.predict_generator(test_generator)
-                test_data = cnn.predict(preproc_img)
-            print(test_data)
+                test_data = cnn.predict_generator(test_generator)
+            print(test_data.shape)
             test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
             
             # identify
