@@ -11,7 +11,7 @@ import tensorflow
 import numpy as np
 from werkzeug.utils import secure_filename
 from keras.preprocessing import image
-from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
+from keras.applications.vgg16 import VGG16, preprocess_input
 from webapp import app
 from webapp import track_functions as tf
 
@@ -67,28 +67,30 @@ def index():
             preproc_img_dir = tf.image_preprocessing(img)
             print(preproc_img_dir)
             print(os.listdir(preproc_img_dir))
+            preproc_img = cv2.imread(os.join(preproc_img_dir,'blurred.jpg'))
             
             # get cnn features
-            test_datagen = image.ImageDataGenerator(
-                rotation_range=0,
-                shear_range=0,
-                zoom_range=0,
-                vertical_flip=False,
-                horizontal_flip=False
-            )
-
-            batch_size = 1
-            test_generator = test_datagen.flow_from_directory(
-                preproc_img_dir,
-                target_size = img_shape,
-            batch_size = batch_size,
-            class_mode = None,
-            shuffle = False
-            )
+##            test_datagen = image.ImageDataGenerator(
+##                rotation_range=0,
+##                shear_range=0,
+##                zoom_range=0,
+##                vertical_flip=False,
+##                horizontal_flip=False
+##            )
+##
+##            batch_size = 1
+##            test_generator = test_datagen.flow_from_directory(
+##                preproc_img_dir,
+##                target_size = img_shape,
+##            batch_size = batch_size,
+##            class_mode = None,
+##            shuffle = False
+##            )
 
             global graph
             with graph.as_default():
-                test_data = cnn.predict_generator(test_generator)
+##                test_data = cnn.predict_generator(test_generator)
+                test_data = cnn.predict_(preproc_img)
             print(test_data)
             test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
             

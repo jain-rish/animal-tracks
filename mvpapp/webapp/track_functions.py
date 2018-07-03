@@ -18,7 +18,9 @@ def image_preprocessing(img):
   else:
       sfactor=img_size[0]/orig_imsize[0] 
   # shrink/expand to have the larger size match the desired image size
-  dim = (int(orig_imsize[1] * sfactor), int(orig_imsize[0] * sfactor)) 
+  dim = (int(orig_imsize[1] * sfactor), int(orig_imsize[0] * sfactor))
+  print(orig_imsize)
+  print(dim)
   # perform the actual resizing of the image and show it
   new_img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
   # get the crop        
@@ -36,36 +38,6 @@ def image_preprocessing(img):
  
   return str.replace(file_directory,'preprocessed','')
 
-def image_feature_extraction(blur_img_dir):
-  
-  import time
-  import numpy as np
-  from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
-  from keras.preprocessing import image
-  from keras.models import Model
-  from keras.backend import clear_session
-  import cv2
-  
-  # do feature generation
-  # make grayscale image 3 channels
-  cropped_img = np.repeat(np.reshape(cropped_img, (1, cropped_img.shape[0], cropped_img.shape[1], 1)),3,3)
-  test_datagen = image.ImageDataGenerator(
-    rotation_range=0,
-    shear_range=0,
-    zoom_range=0,
-    vertical_flip=True,
-    horizontal_flip=False
-  )
-  batch_size = 1
-  test_generator = test_datagen.flow_from_directory(
-  cropped_img,
-  batch_size=batch_size)
-  # load the model
-
-  test_data = vgg_conv.predict_generator(test_generator)
-#  test_data = vgg_conv.predict(cropped_img)
-  test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
-  return test_data
 
 def image_classification(test_data):
   
