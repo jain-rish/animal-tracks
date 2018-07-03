@@ -68,7 +68,9 @@ def index():
             print(preproc_img_dir)
             print(os.listdir(preproc_img_dir))
             preproc_img = cv2.imread(os.path.join(preproc_img_dir,'blurred.jpg'))
-            
+            print(preproc_img.shape)
+            preproc_img = np.repeat(np.reshape(cropped_img[:,:,0], (1, cropped_img.shape[0], cropped_img.shape[1], 1)),3,3)
+            print(preproc_img.shape)
             # get cnn features
 ##            test_datagen = image.ImageDataGenerator(
 ##                rotation_range=0,
