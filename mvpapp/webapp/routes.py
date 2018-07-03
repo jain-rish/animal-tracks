@@ -90,7 +90,7 @@ def index():
             global graph
             with graph.as_default():
 ##                test_data = cnn.predict_generator(test_generator)
-                test_data = cnn.predict_(preproc_img)
+                test_data = cnn.predict(preproc_img)
             print(test_data)
             test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
             
