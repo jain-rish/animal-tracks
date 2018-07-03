@@ -67,7 +67,7 @@ def index():
             preproc_img_dir = tf.image_preprocessing(img)
             print(preproc_img_dir)
             print(os.listdir(preproc_img_dir))
-            preproc_img = cv2.imread(os.join(preproc_img_dir,'blurred.jpg'))
+            preproc_img = cv2.imread(os.path.join(preproc_img_dir,'blurred.jpg'))
             
             # get cnn features
 ##            test_datagen = image.ImageDataGenerator(
