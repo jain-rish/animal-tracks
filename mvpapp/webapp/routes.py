@@ -26,8 +26,8 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/',  methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-# @app.route('/cougar_example', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST', 'COUGAR'])
+@app.route('/cougar_example', methods=['GET', 'POST'])
 
 
 def index():
@@ -40,7 +40,10 @@ def index():
     if method == 'GET':
         return flask.render_template('index.html')
     
-    if method == 'POST':
+    if method == 'COUGAR':
+        return flask.render_template('cougar_example.html')
+    
+   if method == 'POST':
         # No file found in the POST submission
         if 'file' not in flask.request.files:
             print("FAIL")
