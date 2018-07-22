@@ -31,27 +31,6 @@
     </div>
 </div>
 
-    <div class="container">
-    <div class="starter-template">
-        <h2>Printr</h2>
-        <p>Please select a photo of a track to determine which animal most likely left it.</p> <p>The track should be centered and fill most of the image.</p>
-    </div>
-
-    <div class = "container">
-
-            <form method = "POST" action='/' enctype = "multipart/form-data">
-              <div class="input-group">
-              <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit">Identify</button>
-              </span>
-              <input type = "file" name = "file" placeholder="Upload photo...">
-            </div><!-- /input-group -->           
-          </form>
-    </div>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-
-  </div> <!-- /.container-->
 
     <div class="container">
       <div class="starter-template">
@@ -112,8 +91,62 @@
 
 
      </div><!-- /.container -->      
-      
-     
+ 
+        
+        
+    <div class="container">
+    <div class="starter-template">
+        <h2>Printr</h2>
+        <p>Please select a photo of a track  or click on one below to determine which animal most likely left it.</p> <p>The track should be centered and fill most of the image.</p>
+    </div>
+
+    <div class = "container">
+
+            <form method = "POST" action='/' enctype = "multipart/form-data">
+              <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">Identify</button>
+              </span>
+              <input type = "file" name = "file" placeholder="Upload photo...">
+            </div><!-- /input-group -->           
+          </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+
+  </div> <!-- /.container-->
+        
+        
+        
+ <div class="container">
+    <div class="starter-template" >
+        
+    
+<div class="row">
+        </div> 
+    <div class="row">
+	<div class="column">
+	  <form method="POST" action="/cougar_example">
+	    <input type="image" src="../static/images/demo/cougar11.jpg", name="image" value="cougar11.jpg" height=200>
+	  </form>
+
+	</div>
+	<div class="column">
+	  <form method="POST" action="/bear_example">
+	    <input type="image" src="../static/images/demo/bear-tracks_shrink_center.jpg", name="image" value="bear-tracks_shrink_center.jpg" height=200>
+	  </form>
+
+	</div>
+	<div class="column">
+	  <form method="POST" action="/elk_example">
+	    <input type="image" src="../static/images/demo/elk.jpg", name="image" value="elk.jpg" height=200>
+	  </form>
+
+	</div>
+
+</div>    
+    </div>
+</div>    
       
     <!-- Bootstrap core JavaScript
     ================================================== -->
