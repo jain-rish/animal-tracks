@@ -27,7 +27,7 @@ def allowed_file(filename):
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-@app.route('/cougar_example', methods=['COUGAR'])
+@app.route('/cougar_example', methods=['GET', 'COUGAR'])
 
 
 def index():
