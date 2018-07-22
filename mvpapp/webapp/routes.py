@@ -41,7 +41,7 @@ def index():
     
     if method == 'POST':
         # No file found in the POST submission
-        print(flask.request.files)
+        print(flask.request)
         if 'file' not in flask.request.files:
             print("FAIL")
             return flask.redirect(flask.request.url)
