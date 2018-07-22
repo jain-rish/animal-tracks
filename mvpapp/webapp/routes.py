@@ -111,6 +111,7 @@ def index():
 
 def get_output(img):
             
+    img_shape = (224, 224)
     # preprocess
     preproc_img_dir = tf.image_preprocessing(img)
 ##            print(preproc_img_dir)
