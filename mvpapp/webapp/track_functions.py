@@ -19,8 +19,8 @@ def image_preprocessing(img):
       sfactor=img_size[0]/orig_imsize[0] 
   # shrink/expand to have the larger size match the desired image size
   dim = (int(orig_imsize[1] * sfactor), int(orig_imsize[0] * sfactor))
-  print(orig_imsize)
-  print(dim)
+##  print(orig_imsize)
+##  print(dim)
   # perform the actual resizing of the image and show it
   new_img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
   # get the crop        
@@ -32,7 +32,7 @@ def image_preprocessing(img):
 
   # median filter
   blur_img = cv2.medianBlur(gray_img, filt_size);
-  print(blur_img.shape)
+##  print(blur_img.shape)
   # save the blurred grayscale image
   cv2.imwrite(blur_img_fname, blur_img)
  
@@ -60,7 +60,7 @@ def image_classification(test_data):
   test_data = scaler.transform(test_data)
   # predict the class
   pred = clf.predict(test_data)
-  print(pred)
+##  print(pred)
   return class_labels[int(np.round(pred))]
 
 
