@@ -43,7 +43,7 @@ def index():
     if method == 'COUGAR':
         return flask.render_template('cougar_example.html')
     
-   if method == 'POST':
+    if method == 'POST':
         # No file found in the POST submission
         if 'file' not in flask.request.files:
             print("FAIL")
