@@ -103,4 +103,59 @@ def index():
         flask.flash('Upload only image files')
         
         return flask.redirect(flask.request.url)
-    
+
+
+
+
+# example images
+
+def get_output(img)
+            
+    # preprocess
+    preproc_img_dir = tf.image_preprocessing(img)
+##            print(preproc_img_dir)
+##            print(os.listdir(preproc_img_dir))
+            
+            # get cnn features
+    test_datagen = image.ImageDataGenerator(
+                rescale=1./255,
+                rotation_range=0,
+                width_shift_range = 0,
+                height_shift_range = 0,
+                shear_range=0,
+                zoom_range=0,
+                fill_mode = 'nearest'
+    )
+
+    batch_size = 50
+    test_generator = test_datagen.flow_from_directory(
+                preproc_img_dir,
+                target_size = img_shape,
+                batch_size = batch_size,
+                class_mode = None,
+                shuffle = False
+    )
+
+    global graph
+    with graph.as_default():
+    test_data = cnn.predict_generator(test_generator)
+    print(test_data.shape)
+    test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
+            
+            # identify
+    predicted_class = tf.image_classification(test_data)
+    image_files, creature_names, track_paths = tf.get_outputs(predicted_class)
+    return predicted_class, image_files, creature_names, track_paths
+
+
+@app.route("/cougar_example", methods= ['GET', 'POST'])
+def cougar_example():
+    method = flask.request.method
+    if method == 'GET':
+        return flask.render_template('index.html')
+    if method == 'POST':
+        demo_img="/static/images/demo/cougar11.jpg"
+        img = cv2.imread(imgurl)
+        print(img)
+        predicted_class, image_files, creature_names, track_paths = get_output(img)
+        return flask.render_template('output.html', the_result = predicted_class, image_files = image_files, creature_names = creature_names, track_paths = track_paths, input_photo = demo_img)
