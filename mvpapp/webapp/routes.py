@@ -61,7 +61,7 @@ def index():
             print(imgurl)
             img_file.save(imgurl)
             img = cv2.imread(imgurl)
-            print(img)
+##            print(img)
             
             # preprocess
             preproc_img_dir = tf.image_preprocessing(img)
@@ -155,7 +155,7 @@ def cougar_example():
         return flask.render_template('index.html')
     if method == 'POST':
         demo_img="/static/images/demo/cougar11.jpg"
-        img = cv2.imread(imgurl)
-        print(img)
+        img = cv2.imread(demo_img)
+##        print(img)
         predicted_class, image_files, creature_names, track_paths = get_output(img)
         return flask.render_template('output.html', the_result = predicted_class, image_files = image_files, creature_names = creature_names, track_paths = track_paths, input_photo = demo_img)
