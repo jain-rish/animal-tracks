@@ -138,7 +138,7 @@ def get_output(img):
 
     global graph
     with graph.as_default():
-    test_data = cnn.predict_generator(test_generator)
+        test_data = cnn.predict_generator(test_generator)
     print(test_data.shape)
     test_data = np.reshape(test_data, (1, np.prod(test_data.shape)))
             
