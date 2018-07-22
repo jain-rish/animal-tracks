@@ -154,7 +154,7 @@ def cougar_example():
     if method == 'GET':
         return flask.render_template('index.html')
     if method == 'POST':
-        demo_img="/static/images/demo/cougar11.jpg"
+        demo_img="./webapp/static/images/demo/cougar11.jpg"
         img = cv2.imread(demo_img)
 ##        print(img)
         predicted_class, image_files, creature_names, track_paths = get_output(img)
