@@ -26,8 +26,8 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/',  methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST', 'COUGAR'])
-@app.route('/cougar_example', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+@app.route('/cougar_example', methods=['COUGAR'])
 
 
 def index():
