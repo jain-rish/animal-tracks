@@ -148,7 +148,7 @@ def bear_example():
 
 
 @app.route("/elk_example", methods= ['GET', 'POST'])
-def cougar_example():
+def elk_example():
     method = flask.request.method
     if method == 'GET':
         return flask.render_template('index.html')
