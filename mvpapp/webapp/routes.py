@@ -109,7 +109,7 @@ def index():
 
 # example images
 
-def get_output(img)
+def get_output(img):
             
     # preprocess
     preproc_img_dir = tf.image_preprocessing(img)
