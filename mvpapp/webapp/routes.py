@@ -27,7 +27,6 @@ def allowed_file(filename):
 
 @app.route('/',  methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
-@app.route('/cougar_example', methods=['GET', 'COUGAR'])
 
 
 def index():
@@ -39,9 +38,6 @@ def index():
 
     if method == 'GET':
         return flask.render_template('index.html')
-    
-    if method == 'COUGAR':
-        return flask.render_template('cougar_example.html')
     
     if method == 'POST':
         # No file found in the POST submission
