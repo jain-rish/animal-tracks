@@ -140,7 +140,7 @@ def bear_example():
     if method == 'GET':
         return flask.render_template('index.html')
     if method == 'POST':
-        demo_img="./webapp/static/images/demo/bear.jpg"
+        demo_img="./webapp/static/images/demo/bear-tracks_shrink_center.jpg"
         img = cv2.imread(demo_img)
 ##        print(img)
         predicted_class, image_files, creature_names, track_paths = get_output(img)
